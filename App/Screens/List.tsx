@@ -17,8 +17,6 @@ type itemRender = {
 const { height, width } = Dimensions.get("screen")
 
 
-
-
 const List = () => {
   const dispatch = useDispatch();
   const list = useSelector((state: GetInitialState) => state.list)
@@ -64,7 +62,7 @@ const List = () => {
         keyExtractor={keyExtractor}
         data={localList}
         renderItem={renderItem}
-        initialNumToRender={20}
+        initialNumToRender={1000}
         getItemLayout={(data, index) => (
           { length: height, offset: 0, index }
         )}
