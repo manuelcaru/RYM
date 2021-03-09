@@ -5,16 +5,23 @@ import { GetInitialState } from '../Reducers/GetList';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEpisode } from '../Actions/rickandmorty';
 
+//Get dimensions of screen to apply in styles
 const { height, width } = Dimensions.get("screen")
 
+//Create Detalle function
 const Detalle = () => {
+    //Use Redux hooks
     const dispatch = useDispatch();
     const list = useSelector((state: GetInitialState) => state.episodio)
+    //Use Navigation hook
     const route = useRoute();
+    //Use state hooks
     const [item, setEpisodes] = useState<any>(route.params)
+    //Use effect hook
     useEffect(() => {
         dispatch(getEpisode(item.substring(item.lastIndexOf("/") + 1)))
     }, [item])
+    //Return elements, conditional added to show loader
     if(list){
         const {name, air_date, episode, created} = list;
         const creado = (new Date(Date.parse(created || ""))).toUTCString()
@@ -42,6 +49,7 @@ const Detalle = () => {
         return <ActivityIndicator size="large" color="#0000ff" style={{ justifyContent: 'center', alignItems: 'center', marginTop: height * 0.4 }} />
     }
 }
+//Create styles
 const styles = StyleSheet.create({
     container: {
         flex: 1,

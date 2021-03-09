@@ -1,8 +1,10 @@
 import { itemList } from "../Reducers/GetList";
 
+//Create exports consts with all types
 export const GET_LIST = 'GET_LIST';
 export const GET_EPISODE = 'GET_EPISODE';
 
+//Create interface per action
 interface GetList {
     payload?: string,
     type: typeof GET_LIST,
@@ -12,7 +14,7 @@ interface GetList {
         info: object,
         results: itemList[]
     },
-    statusApi: {
+    statusApi?: {
         ok: boolean
     },
 }
@@ -32,4 +34,5 @@ interface GetEpisode {
     },
 }
 
+//export a single type with unions from all action types
 export type GetActionTypes = GetList | GetEpisode;

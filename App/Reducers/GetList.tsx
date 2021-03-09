@@ -4,6 +4,7 @@ import {
   GetActionTypes,
 } from '../Actions/types';
 
+//define types for this Reducer
 export type itemList = {
   created: string,
   episode: string[],
@@ -34,13 +35,15 @@ export type GetInitialState = {
   episodio: itemEpisode,
   list_ok: httpOk
 }
+
+//Create initial state for this reducer
 const initialState: GetInitialState = {
   list: [],
   episodio: {},
   list_ok: true
 }
 
-
+//Create reducer
 export function getListReducer(
   state = initialState,
   action: GetActionTypes

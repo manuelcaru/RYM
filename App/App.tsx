@@ -7,7 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import List from '../App/Screens/List';
 import Profile from '../App/Screens/Profile';
 import Detalle from '../App/Screens/Detalle';
-import { applyMiddleware, createStore, combineReducers } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import rootMiddleware from './Middleware/root.middleware';
@@ -16,8 +16,10 @@ import { getListReducer } from '../App/Reducers/GetList';
 
 
 
-
+//Create stack navigator
 const Stack = createStackNavigator();
+
+//Redux: create store and apply middleware
 let createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 let createWithRoot = applyMiddleware(rootMiddleware);
 

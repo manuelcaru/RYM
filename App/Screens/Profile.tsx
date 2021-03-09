@@ -4,15 +4,18 @@ import { ListItem, Avatar, Divider } from 'react-native-elements';
 import { useRoute } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 
-
+//Get dimensions of screen to apply in styles
 const { height, width } = Dimensions.get("screen")
 
+//Create Profile function
 const Profile = () => {
+    //Use Navigation hooks
     const route = useRoute();
     const navigation = useNavigation();
+    //Use state hooks
     const [item, setEpisodes] = useState<any>(route.params)
-    console.log('la ruta params es ', route)
 
+    //Function to render each item of the list
     const renderItem = ({item}: any) => {
         const episodio = item.substring(item.lastIndexOf("/")+1)
         return(
@@ -25,7 +28,9 @@ const Profile = () => {
         </ListItem>
       </TouchableOpacity>
       )};
+    //Function key extractor for Flatlist
     const keyExtractor = (item: object, index: number) => index.toString()
+    //Return Elemens
     return (
         <View style={styles.container}>
             <View style={styles.containerAvatar}>
@@ -71,6 +76,8 @@ const Profile = () => {
         </View>
     )
 }
+
+//Create styles
 const styles = StyleSheet.create({
     container: {
         flex: 1,

@@ -7,27 +7,29 @@ import { getList } from '../Actions/rickandmorty';
 import { GetInitialState, itemList } from '../Reducers/GetList';
 import { useNavigation } from '@react-navigation/native';
 
-
+//Create types to use in this screen
 type SearchBarTS = string;
 type PageTS = number;
 type itemRender = {
   item: itemList
 }
 
+//Get dimensions of screen to apply in styles
 const { height, width } = Dimensions.get("screen")
 
-
+//Create List function
 const List = () => {
+  //Define Navigation hook
+  const navigation = useNavigation();
+  //Define Redux hooks
   const dispatch = useDispatch();
   const list = useSelector((state: GetInitialState) => state.list)
   const httpOk = useSelector((state: GetInitialState) => state.list_ok)
+  //Define State hook
   const [localList, setLocalList] = useState<itemList[]>([])
   const [searchBar, setSearchBar] = useState<SearchBarTS>('');
   const [page, setPage] = useState<PageTS>(1)
-  const navigation = useNavigation();
-
-
-  console.log(list)
+  //Define useEffects hooks
   useEffect(() => {
     dispatch(getList(page));
   }, [page])
@@ -35,11 +37,14 @@ const List = () => {
     searchBar === "" ? setLocalList(list) : filterSearch(searchBar)
   }, [list])
 
+  //Function triggered when list arrives to the end
   const endReached = () => {
-    console.log('endreached')
     httpOk ? setPage(page + 1) : null;
   }
-  const keyExtractor = (item: object, index: number) => index.toString()
+  //Function key extractor for Flatlist
+  const keyExtractor = (item: object, index: number) => index.toString();
+
+  //Function to render each item of the list
   const renderItem = ({ item }: itemRender) => {
     return (
       <TouchableOpacity onPress={() => navigation.navigate('Profile', item)} style={styles.containerTouch}>
@@ -53,6 +58,7 @@ const List = () => {
       </TouchableOpacity>
     )
   }
+  //Use hook memo to improve performance with heavy lists
   const listaItems = useMemo(() => {
     return (
       <FlatList
@@ -69,13 +75,14 @@ const List = () => {
       />)
   }, [list, localList])
 
+  //Function to filter the list with text search bar
   const filterSearch = (search:string) => {
       const newList = list.filter((item)=>item.name.includes(search));
       setSearchBar(search);
       setLocalList(newList);
       httpOk ? setPage(page + 1) : null;
   }
-
+  //Return Elemens
   return (
     <View>
       <SearchBar
@@ -91,6 +98,8 @@ const List = () => {
     </View>
   )
 }
+
+//Create styles
 const styles = StyleSheet.create({
   containerFlat: {
     backgroundColor: 'black'
